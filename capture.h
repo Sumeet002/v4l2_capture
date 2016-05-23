@@ -5,12 +5,18 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include <math.h>
+#include <malloc.h>
+#include <string.h>
+#include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
+#include <asm/types.h>
 #include <sys/time.h>
 #include <sys/mman.h>
 #include <sys/select.h>
 #include <linux/videodev2.h>
+
 
 struct buffer {
 
@@ -18,6 +24,6 @@ struct buffer {
 	size_t offset;
 	unsigned int length;
 
-}
+};
 
 

@@ -18,6 +18,6 @@ struct buffer {
 	size_t offset;
 	unsigned int length;
 
-}
+};
 
-struct testbuffer capture_buffers[3];
+

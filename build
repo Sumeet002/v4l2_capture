@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "V4L2 capture application"
+
+echo "Building the v4l2 example for video capture application"
+g++ -O2  capture.cpp `pkg-config --libs opencv` -o v4l2_capture -fpermissive 
+
+echo "Finished"
+
+
+
+
+
