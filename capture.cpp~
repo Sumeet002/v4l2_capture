@@ -228,7 +228,7 @@ void yuv2rgb(uchar *src,uchar *dest,int width,int height){
 
 int display(void){
 
-	Mat cap_src(img_in_height,img_in_width*2,CV_8UC1);
+	Mat cap_src(img_in_height,img_in_width,CV_8UC2);
 	Mat cap_dst(img_in_height,img_in_width,CV_8UC3);
 	
 	unsigned char *cap_src_ptr=cap_src.ptr<uchar>(0);	
