@@ -21,6 +21,11 @@ v4l2_std_id g_current_std = V4L2_STD_PAL;
 
 struct buffer capture_buffers[3];
 
+static void errno_exit(const char *s)
+{
+        fprintf(stderr, "%s error %d, %s\n", s, errno, strerror(errno));
+        exit(EXIT_FAILURE);
+}
 
 int setup_capture(void){
 
@@ -111,8 +116,8 @@ int setup_capture(void){
 	memset(&fmt, 0, sizeof(fmt));
 
 	fmt.type                = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-	fmt.fmt.pix.width       = 640;
-	fmt.fmt.pix.height      = 480;
+	fmt.fmt.pix.width       = 720;
+	fmt.fmt.pix.height      = 576;
 	fmt.fmt.pix.pixelformat = img_fmt;
 	fmt.fmt.pix.field       = V4L2_FIELD_INTERLACED;
 
@@ -258,8 +263,15 @@ int display(void){
 		capture_buf.memory = V4L2_MEMORY_MMAP;
 		
 		if (ioctl(fd, VIDIOC_DQBUF, &capture_buf) < 0) {
-			printf("VIDIOC_DQBUF failed.\n");
-			return TFAIL;
+			switch (errno) {
+                        	case EAGAIN:
+                                	return 0;
+				case EIO:
+                                	/*ignore EIO */
+					/* fall through */
+				default:
+                                	errno_exit("VIDIOC_DQBUF");
+                        }			
 		}		
 		
 
